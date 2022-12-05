@@ -4,7 +4,6 @@ const { getBuffer, sleep } = require('../lib/function')
 const knights = require("knights-canvas")
 const DIG = require('discord-image-generation')
 const removebg = require('removebg-id')
-const yuricanvas = require("yuri-canvas")
 const make = require("claire-cord");
 const kbeta = require('knights-beta');
 
