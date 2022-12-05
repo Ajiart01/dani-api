@@ -12,7 +12,6 @@ const api = require("caliph-api");
 const ss = require('../lib/apk')
 const md = require('../lib/modem')
 const hx = require('hxz-api');
-const xa = require('xfarr-api')
 const zrapi = require("zrapi");
 
 const fs = require('fs')
@@ -38,29 +37,6 @@ __path = process.cwd()
           } catch(err) {
               console.log(err)
               res.status(500).send({ status: 500, message: 'An internal error occurred. Please report via whatsApp wa.me/6285714627920', result: 'error' })
-         }
-     }
-     
-     async function tiktok2(req, res) {         
-     	try {
-            let url = req.query.url
-            let apikey = req.query.apikey
-            if (!url) return res.status(400).send({ status: 400, message: 'url parameter cannot be empty', result: 'error' })
-            if (!apikey) return res.status(400).send({ status: 400, message: 'apikey parameter cannot be empty', result: 'error' })
-            let check = await cekKey(apikey)
-            if (!check) return res.status(404).send({ status: 404, message: `apikey ${apikey} not found, please register first.` })
-            let limit = await isLimit(apikey);
-            if (limit) return res.status(429).send({ status: 429, message: 'requests limit exceeded (100 req / day), call owner for an upgrade to premium', result: 'error' })
-            limitAdd(apikey);
-            let hasil = await xa.downloader.tiktok(url)
-            let title = await (hasil.title)
-            let thumbnail = await (hasil.thumbnail)
-            let duration = await (hasil.duration)
-            let media = await (hasil.media)
-             res.status(200).json({ status: 200, result: { title: title, thumbnail: thumbnail, duration: duration, media: media }})
-         } catch(err) {
-             console.log(err)
-             res.status(500).send({ status: 500, message: 'An internal error occurred. Please report via WhatsApp wa.me/6285714627920', result: 'error' })
          }
      }
      
@@ -611,29 +587,6 @@ __path = process.cwd()
               res.status(500).send({ status: 500, message: 'An internal error occurred. Please report via whatsapp wa.me/6285714627920', result: 'error' })
           }
      }
-     
-     async function instagram3(req, res) {         
-     	try {
-            let url = req.query.url
-            let apikey = req.query.apikey
-            if (!url) return res.status(400).send({ status: 400, message: 'url parameter cannot be empty', result: 'error' })
-            if (!apikey) return res.status(400).send({ status: 400, message: 'apikey parameter cannot be empty', result: 'error' })
-            let check = await cekKey(apikey)
-            if (!check) return res.status(404).send({ status: 404, message: `apikey ${apikey} not found, please register first.` })
-            let limit = await isLimit(apikey);
-            if (limit) return res.status(429).send({ status: 429, message: 'requests limit exceeded (100 req / day), call owner for an upgrade to premium', result: 'error' })
-            limitAdd(apikey);
-            let hasil = await xa.downloader.instagram(url)
-            let title = await (hasil.title)
-            let thumbnail = await (hasil.thumbnail)
-            let duration = await (hasil.duration)
-            let media = await (hasil.media)
-             res.status(200).json({ status: 200, result: { title: title, thumbnail: thumbnail, duration: duration, media: media }})
-         } catch(err) {
-             console.log(err)
-             res.status(500).send({ status: 500, message: 'An internal error occurred. Please report via WhatsApp wa.me/6285714627920', result: 'error' })
-         }
-     }
 
      async function instastory(req, res) {
          try {
@@ -798,7 +751,7 @@ __path = process.cwd()
             let limit = await isLimit(apikey);
             if (limit) return res.status(429).send({ status: 429, message: 'requests limit exceeded (100 req / day), call owner for an upgrade to premium', result: 'error' })
             limitAdd(apikey);
-            let hasil = await xa.downloader.facebook(url)
+            let hasil = await md.facebook(url)
             let title = await (hasil.title)
             let sd = await (hasil.sd)
             let hd = await (hasil.hd)
@@ -1139,7 +1092,6 @@ module.exports = {
    tiktokmusically,
    pindl, 
    mediafire,
-   tiktok2,
    soundcloud,
    instagram,
    instastory,
@@ -1159,7 +1111,6 @@ module.exports = {
    imdbdl,
    likeedl,
    cocofun,
-   instagram3,
    spotifydl,
    umma,
    instastory2,

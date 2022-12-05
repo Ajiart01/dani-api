@@ -1,7 +1,5 @@
 const { getBuffer } = require('../lib/function')
 const { cekKey, limitAdd, isLimit } = require('../database/db');
-const xa = require('xfarr-api');
-const api = require("caliph-api");
 const zrapi = require("zrapi");
 
 const fs = require('fs')
@@ -45,16 +43,19 @@ __path = process.cwd()
      async function photooxy(req, res) {
             try {
             let url = req.query.url
-            let text = req.query.text          
-            if (!url) return res.status(400).send({ status: 400, message: 'url parameter cannot be empty', result: 'error' })
+            let text = req.query.text
+            if (!url) return res.status(400).send({ status: 400, message: 'url parameter cannot be empty', result: 'error' })           
             if (!text) return res.status(400).send({ status: 400, message: 'text parameter cannot be empty', result: 'error' })           
-            let result = await xa.maker.photooxy(url,text)
-              res.status(200).json({ status: 200, result: result.result })
+            fetch(encodeURI(`https://api.akuari.my.id/photooxy/scraper1?text=${text}&link=${url}`))
+           .then(response => response.json())
+           .then(result => {
+              res.status(200).json({ status: 200, result: result.respon })
+            })
          } catch(err) {
               console.log(err)
               res.status(500).send({ status: 500, message: 'An internal error occurred. Please report via whatsapp wa.me/6285714627920', result: 'error' })
          }
-     }     
+     }
      
      async function photooxy2(req, res) {
           try {
@@ -81,10 +82,10 @@ __path = process.cwd()
             let text = req.query.text
             if (!url) return res.status(400).send({ status: 400, message: 'url parameter cannot be empty', result: 'error' })           
             if (!text) return res.status(400).send({ status: 400, message: 'text parameter cannot be empty', result: 'error' })           
-            fetch(encodeURI(`https://dap-apiz.herokuapp.com/ephoto1?url=${url}&text=${text}`))
+            fetch(encodeURI(`https://api.akuari.my.id/ephoto/scraper-1?text=${text}&link=${url}`))
            .then(response => response.json())
            .then(result => {
-              res.status(200).json({ status: 200, result: result.result })
+              res.status(200).json({ status: 200, result: result.respon })
             })
          } catch(err) {
               console.log(err)
@@ -100,10 +101,10 @@ __path = process.cwd()
             if (!url) return res.status(400).send({ status: 400, message: 'url parameter cannot be empty', result: 'error' })           
             if (!text) return res.status(400).send({ status: 400, message: 'text parameter cannot be empty', result: 'error' })           
             if (!text2) return res.status(400).send({ status: 400, message: 'text2 parameter cannot be empty', result: 'error' })           
-            fetch(encodeURI(`https://dap-apiz.herokuapp.com/ephoto2?url=${url}&text1=${text}&text2=${text2}`))
+            fetch(encodeURI(`https://api.akuari.my.id/ephoto/scraper-2?text=${text}&text2=${text2}&link=${url}`))
            .then(response => response.json())
            .then(result => {
-              res.status(200).json({ status: 200, result: result.result })
+              res.status(200).json({ status: 200, result: result.respon })
             })
          } catch(err) {
               console.log(err)

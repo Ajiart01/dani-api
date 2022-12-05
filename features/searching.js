@@ -11,7 +11,6 @@ const api = require("caliph-api");
 const zacros = "cd97-3ac1-5119"
 const pk = require('../lib/modem')
 const lagu = require('../lib/lirik')
-const xa = require('xfarr-api')
 
 __path = process.cwd()
 
@@ -105,10 +104,10 @@ __path = process.cwd()
             let limit = await isLimit(apikey);
             if (limit) return res.status(429).send({ status: 429, message: 'requests limit exceeded (100 req / day), call owner for an upgrade to premium', result: 'error' })
             limitAdd(apikey);
-            let hasil = await xa.search.chord(query)
-            let title = await (hasil.title)
-            let artist = await (hasil.artist)
-            let chord = await (hasil.chord)
+            let hasil = await await scraper.bioskop(query)
+            let title = await (hasil.res.title)
+            let artist = await (hasil.res.artist)
+            let chord = await (hasil.res.chord)
               res.status(200).json({ status: 200, result: { title: title, artist: artist, chord: chord }})
          } catch(err) {
               console.log(err)
@@ -997,8 +996,8 @@ __path = process.cwd()
             let limit = await isLimit(apikey);
             if (limit) return res.status(429).send({ status: 429, message: 'requests limit exceeded (100 req / day), call owner for an upgrade to premium', result: 'error' })
             limitAdd(apikey);
-            let result = await xa.search.bingsearch(query)
-              res.status(200).json({ status: 200, result: result.results })
+            let result = await pk.bingsearch(query)
+              res.status(200).json({ status: 200, result: result })
          } catch(err) {
               console.log(err)
               res.status(500).send({ status: 500, message: 'An internal error occurred. Please report via whatsapp wa.me/6285714627920', result: 'error' })
@@ -1016,47 +1015,7 @@ __path = process.cwd()
             let limit = await isLimit(apikey);
             if (limit) return res.status(429).send({ status: 429, message: 'requests limit exceeded (100 req / day), call owner for an upgrade to premium', result: 'error' })
             limitAdd(apikey);
-            let result = await xa.search.bingimage(query)
-              res.status(200).json({ status: 200, result: result.results })
-         } catch(err) {
-              console.log(err)
-              res.status(500).send({ status: 500, message: 'An internal error occurred. Please report via whatsapp wa.me/6285714627920', result: 'error' })
-         }
-     }
-     
-     async function whatimage(req, res) {
-         try {
-            let url = req.query.url
-            let apikey = req.query.apikey
-            if (!url) return res.status(400).send({ status: 400, message: 'url parameter cannot be empty', result: 'error' })
-            if (!apikey) return res.status(400).send({ status: 400, message: 'apikey parameter cannot be empty', result: 'error' })
-            let check = await cekKey(apikey)
-            if (!check) return res.status(404).send({ status: 404, message: `apikey ${apikey} not found, please register first.` })
-            let limit = await isLimit(apikey);
-            if (limit) return res.status(429).send({ status: 429, message: 'requests limit exceeded (100 req / day), call owner for an upgrade to premium', result: 'error' })
-            limitAdd(apikey);
-            let hasil = await xa.search.whatimage(url)
-            let imgUrl = await (hasil.imgUrl)
-            let googleSearchResult = await (hasil.googleSearchResult)          
-              res.status(200).json({ status: 200, result: { imgUrl: imgUrl, googleSearchResult: googleSearchResult }})
-         } catch(err) {
-              console.log(err)
-              res.status(500).send({ status: 500, message: 'An internal error occurred. Please report via whatsapp wa.me/6285714627920', result: 'error' })
-         }
-     }
-     
-     async function whatmusic(req, res) {
-         try {
-            let url = req.query.url
-            let apikey = req.query.apikey
-            if (!url) return res.status(400).send({ status: 400, message: 'url parameter cannot be empty', result: 'error' })
-            if (!apikey) return res.status(400).send({ status: 400, message: 'apikey parameter cannot be empty', result: 'error' })
-            let check = await cekKey(apikey)
-            if (!check) return res.status(404).send({ status: 404, message: `apikey ${apikey} not found, please register first.` })
-            let limit = await isLimit(apikey);
-            if (limit) return res.status(429).send({ status: 429, message: 'requests limit exceeded (100 req / day), call owner for an upgrade to premium', result: 'error' })
-            limitAdd(apikey);
-            let result = await xa.search.whatmusic(url)
+            let result = await pk.bingimage(query)
               res.status(200).json({ status: 200, result: result })
          } catch(err) {
               console.log(err)
@@ -1111,8 +1070,6 @@ module.exports = {
    wikimedia,
    ringtone,
    mcpedl,
-   whatmusic,
-   whatimage,
    bingimage,
    bingsearch,
    pinterest2,
