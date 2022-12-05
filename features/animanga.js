@@ -7,14 +7,12 @@ const ss = require('../lib/apk')
 const md = require('../lib/modem')
 
 const fs = require('fs')
-const topdf = require('image-to-pdf')
 const request = require('request')
 const fetch = require('node-fetch')
 const axios = require('axios')
 const nhentai = require('nhentai-node-api')
 const cheerio = require('cheerio')
 const zacros = "cd97-3ac1-5119"
-const dapakey = "Kirbotz123"
 
 __path = process.cwd()
    
