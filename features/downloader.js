@@ -275,7 +275,7 @@ __path = process.cwd()
             let limit = await isLimit(apikey);
             if (limit) return res.status(429).send({ status: 429, message: 'requests limit exceeded (100 req / day), call owner for an upgrade to premium', result: 'error' })
             limitAdd(apikey);
-            let result = await ch.ytPlayMp3(query)
+            let result = await api.downloader.yt.play(query)
               res.status(200).json({ status: 200, result: result })
          } catch(err) {
               console.log(err)
@@ -294,7 +294,7 @@ __path = process.cwd()
             let limit = await isLimit(apikey);
             if (limit) return res.status(429).send({ status: 429, message: 'requests limit exceeded (100 req / day), call owner for an upgrade to premium', result: 'error' })
             limitAdd(apikey);
-            let result = await ch.ytPlayMp4(query)
+            let result = await api.downloader.yt.playvid(query)
               res.status(200).json({ status: 200, result: result })
          } catch(err) {
               console.log(err)
@@ -313,7 +313,7 @@ __path = process.cwd()
             let limit = await isLimit(apikey);
             if (limit) return res.status(429).send({ status: 429, message: 'requests limit exceeded (100 req / day), call owner for an upgrade to premium', result: 'error' })
             limitAdd(apikey);
-            let result = await ch.ytDonlodMp3(url)
+            let result = await api.downloader.youtube.ytmp3(url)
               res.status(200).json({ status: 200, result: result })
           } catch(err) {
               console.log(err)
@@ -332,7 +332,7 @@ __path = process.cwd()
             let limit = await isLimit(apikey);
             if (limit) return res.status(429).send({ status: 429, message: 'requests limit exceeded (100 req / day), call owner for an upgrade to premium', result: 'error' })
             limitAdd(apikey);
-            let result = await ch.ytDonlodMp4(url)
+            let result = await api.downloader.yt.mp4(url)
               res.status(200).json({ status: 200, result: result })
           } catch(err) {
               console.log(err)
