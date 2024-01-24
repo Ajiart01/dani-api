@@ -75,6 +75,7 @@
     "nodemon": "^2.0.12",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
+    "ytdl-core": "git@github.com:fent/node-ytdl-core.git",
     "scrape-primbon": "^1.1.0"
   }
 }
